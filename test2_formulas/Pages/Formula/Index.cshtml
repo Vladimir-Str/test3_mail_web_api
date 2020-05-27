@@ -1,0 +1,52 @@
+﻿@page
+@model test2_formulas.Pages.Formula.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Expr[0].Expression)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Expr[0].Result)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Expr[0].timeSpan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Expr[0].User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Expr) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Expression)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Result)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.timeSpan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                <a asp-page="./Delete" asp-route-id="@item.ExprID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
