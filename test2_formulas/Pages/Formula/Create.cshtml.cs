@@ -48,15 +48,23 @@ namespace test2_formulas.Pages.Formula
 
             if (await TryUpdateModelAsync<Expr>(
                  emptyExpr,
-                 "Expr",   // Prefix for form value.
+                 "Expr",   
                  s => s.Expression))
             {
                 stopWatch.Start();
-                var result = new DataTable().Compute(emptyExpr.Expression, null);
+                try
+                {
+                    
+                    var result = new DataTable().Compute(emptyExpr.Expression, null);
+                    
+                    emptyExpr.Result = result.ToString();
+                }
+                catch (Exception ex)
+                {
+                    emptyExpr.Result = ex.Message;
+                }
+
                 stopWatch.Stop();
-
-                emptyExpr.Result = result.ToString();
-
                 TimeSpan ts = stopWatch.Elapsed;
                 string elapsedTime = ts.TotalMilliseconds.ToString();
                 emptyExpr.timeSpan = elapsedTime;

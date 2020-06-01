@@ -15,7 +15,8 @@ namespace test2_formulas.Data.Models
         public int ExprID { get; set; }
 
         [Required(ErrorMessage = "Не введено выражение")]
-        [RegularExpression(@"^(?:\d+[*+/-])+\d+$", ErrorMessage = "Некорректное выражение")]
+        [RegularExpression(@"[-+*/().\d]*", ErrorMessage = "Выражение содержит недопустимые символы")]
+
         [StringLength(50)]
         [Display(Name = "Выражение")]
         public string Expression { get; set; }
