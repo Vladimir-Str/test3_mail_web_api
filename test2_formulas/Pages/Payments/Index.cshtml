@@ -1,0 +1,46 @@
+﻿@page
+@model test2_formulas.Pages.Payments.IndexModel
+
+@{
+    ViewData["Title"] = "Платежи";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Пополнение баланса</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Payment[0].User)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Payment[0].PaymentSum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Payment[0].PaymentDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Payment) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentSum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentDate)
+            </td>
+            <td>
+                <a asp-page="./Delete" asp-route-id="@item.PaymentID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

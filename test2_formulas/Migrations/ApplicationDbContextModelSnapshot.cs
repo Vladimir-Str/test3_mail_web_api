@@ -172,6 +172,28 @@ namespace test2_formulas.Migrations
                     b.ToTable("Expressions");
                 });
 
+            modelBuilder.Entity("test2_formulas.Data.Models.Payment", b =>
+                {
+                    b.Property<int>("PaymentID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<decimal>("PaymentSum")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.HasKey("PaymentID");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Payments");
+                });
+
             modelBuilder.Entity("test2_formulas.Data.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -290,7 +312,14 @@ namespace test2_formulas.Migrations
             modelBuilder.Entity("test2_formulas.Data.Models.Expr", b =>
                 {
                     b.HasOne("test2_formulas.Data.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Expressions")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("test2_formulas.Data.Models.Payment", b =>
+                {
+                    b.HasOne("test2_formulas.Data.Models.User", "User")
+                        .WithMany("Payments")
                         .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618

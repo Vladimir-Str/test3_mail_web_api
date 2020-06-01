@@ -15,5 +15,6 @@ namespace test2_formulas.Data.Models
           Database.EnsureCreated();
         }
         public DbSet<Expr> Expressions { get; set; }
+        public DbSet<Payment> Payments { get; set; }
     }
 }
