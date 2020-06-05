@@ -12,9 +12,10 @@ namespace test2_formulas.Data.Models
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-          Database.EnsureCreated();
+  //        Database.EnsureCreated();
         }
         public DbSet<Expr> Expressions { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<BillingParam> BillingParams { get; set; }
     }
 }

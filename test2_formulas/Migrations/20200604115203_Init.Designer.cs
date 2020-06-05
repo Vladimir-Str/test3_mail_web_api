@@ -9,7 +9,7 @@ using test2_formulas.Data.Models;
 namespace test2_formulas.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200601135056_Init")]
+    [Migration("20200604115203_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -147,11 +147,40 @@ namespace test2_formulas.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("test2_formulas.Data.Models.BillingParam", b =>
+                {
+                    b.Property<int>("BillingParamID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("FreeTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<decimal>("MinuteCost")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<double>("TimeCoef")
+                        .HasColumnType("double");
+
+                    b.HasKey("BillingParamID");
+
+                    b.ToTable("BillingParams");
+                });
+
             modelBuilder.Entity("test2_formulas.Data.Models.Expr", b =>
                 {
                     b.Property<int>("ExprID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<double>("Cost")
+                        .HasColumnType("double");
 
                     b.Property<string>("Expression")
                         .IsRequired()
@@ -161,11 +190,11 @@ namespace test2_formulas.Migrations
                     b.Property<string>("Result")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
+                    b.Property<string>("TimeSpan")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("UserId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
-
-                    b.Property<string>("timeSpan")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("ExprID");
 

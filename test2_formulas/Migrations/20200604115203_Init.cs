@@ -48,6 +48,23 @@ namespace test2_formulas.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BillingParams",
+                columns: table => new
+                {
+                    BillingParamID = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    MinuteCost = table.Column<decimal>(type: "decimal(18, 2)", nullable: false),
+                    FreeTime = table.Column<DateTime>(nullable: false),
+                    TimeCoef = table.Column<double>(nullable: false),
+                    StartTime = table.Column<DateTime>(nullable: false),
+                    EndTime = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BillingParams", x => x.BillingParamID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -161,7 +178,8 @@ namespace test2_formulas.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Expression = table.Column<string>(maxLength: 50, nullable: false),
                     Result = table.Column<string>(nullable: true),
-                    timeSpan = table.Column<string>(nullable: true),
+                    TimeSpan = table.Column<string>(nullable: true),
+                    Cost = table.Column<double>(nullable: false),
                     UserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -260,6 +278,9 @@ namespace test2_formulas.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "BillingParams");
 
             migrationBuilder.DropTable(
                 name: "Expressions");

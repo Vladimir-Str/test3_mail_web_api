@@ -11,6 +11,7 @@ using test2_formulas.Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace test2_formulas.Pages.Formula
 {
@@ -35,6 +36,8 @@ namespace test2_formulas.Pages.Formula
         [BindProperty]
         public Expr Expr { get; set; }
 
+
+
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
@@ -48,15 +51,15 @@ namespace test2_formulas.Pages.Formula
 
             if (await TryUpdateModelAsync<Expr>(
                  emptyExpr,
-                 "Expr",   
+                 "Expr",
                  s => s.Expression))
             {
                 stopWatch.Start();
                 try
                 {
-                    
+
                     var result = new DataTable().Compute(emptyExpr.Expression, null);
-                    
+
                     emptyExpr.Result = result.ToString();
                 }
                 catch (Exception ex)
@@ -67,11 +70,26 @@ namespace test2_formulas.Pages.Formula
                 stopWatch.Stop();
                 TimeSpan ts = stopWatch.Elapsed;
                 string elapsedTime = ts.TotalMilliseconds.ToString();
-                emptyExpr.timeSpan = elapsedTime;
+                emptyExpr.TimeSpan = elapsedTime;
 
-                var user = await _userManager.GetUserAsync(User); 
+                var user = await _userManager.GetUserAsync(User);
                 emptyExpr.User = user;
 
+                BillingParam billingparam = await _context.BillingParams.FirstOrDefaultAsync(b => b.BillingParamID == 1);
+                decimal minutecost = billingparam.MinuteCost;
+                DateTime starttime = billingparam.StartTime;
+                DateTime endtime = billingparam.EndTime;
+                double timecoef = billingparam.TimeCoef;
+
+                if (DateTime.UtcNow.TimeOfDay > starttime.TimeOfDay  && DateTime.UtcNow.TimeOfDay < endtime.TimeOfDay )
+                { 
+                    emptyExpr.Cost = (double)minutecost * timecoef * ts.TotalMilliseconds / 1000 / 60;
+                    
+                }
+                else
+                {
+                    emptyExpr.Cost = (double)minutecost * ts.TotalMilliseconds / 1000 / 60;
+                }
                 _context.Expressions.Add(emptyExpr);
                 await _context.SaveChangesAsync();
                 return RedirectToPage("./Index");

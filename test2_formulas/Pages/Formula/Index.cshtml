@@ -20,7 +20,10 @@
                 @Html.DisplayNameFor(model => model.Expr[0].Result)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Expr[0].timeSpan)
+                @Html.DisplayNameFor(model => model.Expr[0].TimeSpan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Expr[0].Cost)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Expr[0].User)
@@ -38,7 +41,10 @@
                 @Html.DisplayFor(modelItem => item.Result)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.timeSpan)
+                @Html.DisplayFor(modelItem => item.TimeSpan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cost)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.User.UserName)

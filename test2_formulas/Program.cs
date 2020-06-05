@@ -25,7 +25,9 @@ namespace test2_formulas
                 {
                     var userManager = services.GetRequiredService<UserManager<User>>();
                     var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    var context = services.GetRequiredService<ApplicationDbContext>();
                     await RoleInitializer.InitializeAsync(userManager, rolesManager);
+                    await BillingParamInitializer.InitializeAsync(context);
                 }
                 catch (Exception ex)
                 {
