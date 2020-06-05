@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +11,7 @@ using test2_formulas.Data.Models;
 
 namespace test2_formulas.Pages.Billing
 {
+    [Authorize(Roles = "admin")]
     public class EditModel : PageModel
     {
         private readonly test2_formulas.Data.Models.ApplicationDbContext _context;
@@ -34,39 +36,34 @@ namespace test2_formulas.Pages.Billing
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
+
         public async Task<IActionResult> OnPostAsync()
         {
+            var paramToUpdate = await _context.BillingParams.FindAsync(1);
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(BillingParam).State = EntityState.Modified;
+            if (paramToUpdate == null)
+            {
+                return NotFound();
+            }
 
-            try
+
+
+            if (await TryUpdateModelAsync<BillingParam>(
+                paramToUpdate,
+                "BillingParam",
+                b => b.MinuteCost, b => b.FreeTime, b => b.TimeCoef, b => b.StartTime, b => b.EndTime))
             {
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BillingParamExists(BillingParam.BillingParamID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToPage("/Index");
             }
 
             return Page();
         }
 
-        private bool BillingParamExists(int id)
-        {
-            return _context.BillingParams.Any(e => e.BillingParamID == id);
-        }
+
     }
 }

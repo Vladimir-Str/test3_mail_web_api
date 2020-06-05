@@ -18,8 +18,8 @@ namespace test2_formulas.Data.Models
 
         [Display(Name = "Бесплатное процессорное время")]
         [Required(ErrorMessage = "Значение параметра не задано")]
-        //[DataType(DataType.Time)]
         [DisplayFormat(DataFormatString = "{0:T}", ApplyFormatInEditMode = true)]
+        //[DataType(DataType.Time)]
         public DateTime FreeTime { get; set; }
 
         [Display(Name = "Коэфициент по времени")]

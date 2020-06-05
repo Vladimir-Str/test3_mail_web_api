@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using test2_formulas.Data.Models;
+using test2_formulas.Data;
 
 namespace test2_formulas.Pages.Formula
 {
@@ -18,12 +19,32 @@ namespace test2_formulas.Pages.Formula
             _context = context;
         }
 
-        public IList<Expr> Expr { get;set; }
+        public string CurrentFilter { get; set; }
+        public PaginatedList<Expr> Exprs { get; set; }
+  //      public IList<Expr> Expr { get;set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string searchString, int? pageIndex, string currentFilter)
         {
-            Expr = await _context.Expressions
-                .Include(e => e.User).ToListAsync();
+            CurrentFilter = searchString;
+
+            if (searchString != null)
+            {
+                pageIndex = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            IQueryable<Expr> ExprIQ = from e in _context.Expressions.Include("User") select e;
+                                             
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                ExprIQ = ExprIQ.Where(e => e.User.NormalizedUserName.Contains(searchString.ToUpper()));
+            }
+            int pageSize = 6;
+
+            Exprs = await PaginatedList<Expr>.CreateAsync(ExprIQ.AsNoTracking(),pageIndex ?? 1, pageSize);
         }
     }
 }
