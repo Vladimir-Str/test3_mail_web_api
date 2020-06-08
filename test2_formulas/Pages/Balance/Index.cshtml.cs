@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using test2_formulas.Data.Models;
 using test2_formulas.Data;
 
-namespace test2_formulas.Pages.Formula
+namespace test2_formulas.Pages.Balance
 {
     public class IndexModel : PageModel
     {
@@ -20,8 +20,10 @@ namespace test2_formulas.Pages.Formula
         }
 
         public string CurrentFilter { get; set; }
-        public PaginatedList<Expr> Exprs { get; set; }
-  //      public IList<Expr> Expr { get;set; }
+        public PaginatedList<User> Users { get; set; }
+
+        public double balance;
+
 
         public async Task OnGetAsync(string searchString, int? pageIndex, string currentFilter)
         {
@@ -37,15 +39,17 @@ namespace test2_formulas.Pages.Formula
             }
             CurrentFilter = searchString;
 
-            IQueryable<Expr> ExprIQ = from e in _context.Expressions.Include("User") select e;
+            IQueryable<User> UserIQ = from u in _context.Users.Include("Expressions").Include("Payments") select u;
                                              
             if (!String.IsNullOrEmpty(searchString))
             {
-                ExprIQ = ExprIQ.Where(e => e.User.NormalizedUserName.Contains(searchString.ToUpper()));
+                UserIQ = UserIQ.Where(e => e.NormalizedUserName.Contains(searchString.ToUpper()));
             }
+            
             int pageSize = 6;
+            Users = await PaginatedList<User>.CreateAsync(UserIQ.AsNoTracking(),pageIndex ?? 1, pageSize);
+            
 
-            Exprs = await PaginatedList<Expr>.CreateAsync(ExprIQ.AsNoTracking(),pageIndex ?? 1, pageSize);
         }
     }
 }

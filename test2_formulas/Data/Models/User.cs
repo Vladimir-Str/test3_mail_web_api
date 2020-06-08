@@ -10,5 +10,17 @@ namespace test2_formulas.Data.Models
     {
         public ICollection<Expr> Expressions { get; set; }
         public ICollection<Payment> Payments { get; set; }
+
+        public double Balance
+        {
+            get
+            {
+
+                if (Payments != null && Expressions != null)
+                    return (double)Payments.Sum(payment => payment.PaymentSum) - (Expressions.Sum(expression => expression.Cost));
+                return 0;
+            }
+
+        }
     }
 }

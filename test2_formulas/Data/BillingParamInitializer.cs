@@ -17,8 +17,7 @@ namespace test2_formulas.Data.Models
             }
 
             var billingparam = new BillingParam { 
-                MinuteCost = 10.5M, 
-                FreeTime = DateTime.Parse("00:00:01"), 
+                MinuteCost = 10.5M,  
                 TimeCoef = 0.5D, 
                 StartTime = DateTime.Parse("00:00:00"), 
                 EndTime = DateTime.Parse("06:00:00") };

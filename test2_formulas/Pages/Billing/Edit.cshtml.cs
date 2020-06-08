@@ -55,7 +55,7 @@ namespace test2_formulas.Pages.Billing
             if (await TryUpdateModelAsync<BillingParam>(
                 paramToUpdate,
                 "BillingParam",
-                b => b.MinuteCost, b => b.FreeTime, b => b.TimeCoef, b => b.StartTime, b => b.EndTime))
+                b => b.MinuteCost,  b => b.TimeCoef, b => b.StartTime, b => b.EndTime))
             {
                 await _context.SaveChangesAsync();
                 return RedirectToPage("/Index");
