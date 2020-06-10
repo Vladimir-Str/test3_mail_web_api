@@ -5,7 +5,7 @@
     ViewData["Title"] = "Платежи";
 }
 
-<h1>Index</h1>
+    <h1>Платежи</h1>
 
 <p>
     <a asp-page="Create">Пополнение баланса</a>
@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Payment[0].User)
+                @Html.DisplayName("Пользователь")
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Payment[0].PaymentSum)
