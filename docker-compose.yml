@@ -17,12 +17,3 @@ services:
     restart: always
     ports:
       - 8080:8080
-
-  test2_formulas:
-    image: ${DOCKER_REGISTRY-}test2formulas
-    build:
-      context: .
-      dockerfile: test2_formulas/Dockerfile
-    ports:
-      - 80:80
-      - 443:443

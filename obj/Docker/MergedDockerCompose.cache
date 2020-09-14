@@ -1,0 +1,39 @@
+services:
+  adminer:
+    build:
+      context: C:\Users\STROGANOV\source\repos\test3_mail_web_api\adminer
+    ports:
+    - published: 8080
+      target: 8080
+    restart: always
+  db:
+    build:
+      context: C:\Users\STROGANOV\source\repos\test3_mail_web_api\db
+    command: mysqld --innodb-flush-method=littlesync --innodb-use-native-aio=OFF --log_bin=ON
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+    - published: 3306
+      target: 3306
+    restart: always
+    volumes:
+    - /c/Users/STROGANOV/source/repos/test3_mail_web_api/databases:/var/lib/mysql:rw
+  test2_formulas:
+    build:
+      context: C:\Users\STROGANOV\source\repos\test3_mail_web_api
+      dockerfile: test2_formulas/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+:80
+    image: test2formulas
+    ports:
+    - published: 80
+      target: 80
+    - target: 80
+    - published: 443
+      target: 443
+    - target: 443
+    volumes:
+    - /c/Users/STROGANOV/AppData/Roaming/ASP.NET/Https:/root/.aspnet/https:ro
+    - /c/Users/STROGANOV/AppData/Roaming/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+version: '3.4'
