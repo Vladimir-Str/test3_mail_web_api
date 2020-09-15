@@ -25,7 +25,7 @@ namespace test3_mail_web_api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<MailContext>(options =>
+            services.AddDbContext<MailsContext>(options =>
             options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
         }

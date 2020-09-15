@@ -1,0 +1,9 @@
+{
+  "smtp": "smtp.gmail.com",
+  "port": "465",
+  "use_ssl": "true",
+  "login": "goodocs44@gmail.com",
+  "password": "w1091EL+PH**",
+  "from": "goodocs44@gmail.com",
+  "fromname": "WebApi mailer"
+}
