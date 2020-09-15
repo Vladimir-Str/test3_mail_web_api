@@ -10,5 +10,6 @@
     <WebStackScaffolding_LayoutPageFile />
     <WebStackScaffolding_DbContextTypeFullName>test3_mail_web_api.Models.MailsContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
+    <ActiveDebugProfile>Docker</ActiveDebugProfile>
   </PropertyGroup>
 </Project>

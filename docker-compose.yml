@@ -16,4 +16,13 @@ services:
     build: ./adminer
     restart: always
     ports:
-      - 8080:8080
+      - 8080:8080    
+
+  test3_mail_web_api:
+    image: ${DOCKER_REGISTRY-}test3_mail_web_api
+    build:
+      context: .
+      dockerfile: test3_mail_web_api/Dockerfile
+    ports:
+      - 80:80
+      - 443:443
