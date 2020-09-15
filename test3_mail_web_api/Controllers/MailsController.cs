@@ -45,8 +45,8 @@ namespace test3_mail_web_api.Controllers
                 Subject = mail.Subject,
                 Body = mail.Body,
                 CreateDate = DateTime.UtcNow,
-                Result = "Failed",
-                FailedMessage = "Неизвестная ошибка при отправке email",
+                Result = "Ok",
+                FailedMessage = "",
                 Recipients = mail.Recipients
             };
 
@@ -54,11 +54,16 @@ namespace test3_mail_web_api.Controllers
             EmailService emailService = new EmailService();
             foreach (string recipient in Recipients)
             { 
-                await emailService.SendEmailAsync(recipient, maildto.Subject, maildto.Body); 
+                try
+                {
+                    await emailService.SendEmailAsync(recipient, maildto.Subject, maildto.Body);
+                }
+                catch (Exception ex)
+                {
+                    maildto.FailedMessage = ex.Message;
+                    maildto.Result = "Failed";
+                }
             }
-
-            maildto.FailedMessage = "";
-            maildto.Result = "Ok";
             db.Mails.Add(maildto);
             await db.SaveChangesAsync();
             return Ok(maildto);
