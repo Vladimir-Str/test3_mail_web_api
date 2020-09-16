@@ -14,12 +14,12 @@ namespace test3_mail_web_api.Migrations
                 {
                     MailID = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Subject = table.Column<string>(nullable: false),
+                    Subject = table.Column<string>(maxLength: 50, nullable: false),
                     Body = table.Column<string>(nullable: false),
                     CreateDate = table.Column<DateTime>(nullable: false),
                     Result = table.Column<string>(nullable: true),
                     FailedMessage = table.Column<string>(nullable: true),
-                    Recipients = table.Column<string>(nullable: false)
+                    Recipients = table.Column<string>(maxLength: 2500, nullable: false)
                 },
                 constraints: table =>
                 {

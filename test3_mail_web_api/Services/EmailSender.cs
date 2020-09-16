@@ -3,6 +3,7 @@ using MimeKit;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using Microsoft.Extensions.Options;
 
 namespace test3_mail_web_api.Services
 {
@@ -10,17 +11,16 @@ namespace test3_mail_web_api.Services
     /// EmailService получает конфигурацию для подключения к smtp серверу
     /// Выполняет подключение и отправку писем, с переданными параметрами
     /// </summary>
-    public class EmailSender : ISender
+    public class EmailSender  : ISender 
     {
         /// <summary>
         /// Конструктор EmailService считывает параметры подключения из файла "emailservice.json в MailConfig
         /// </summary>
-        public EmailSender()
+        public EmailSender(IOptions<SMTPoptions> options)
         {
-            var builder = new ConfigurationBuilder().AddJsonFile("emailservice.json");
-            MailConfig = builder.Build();
+            _options = options.Value;
         }
-        public IConfiguration MailConfig { get; set; }
+        private readonly SMTPoptions _options;
 
         /// <summary>
         /// метод SendEmailAsync принимает параметры: адресат, тема и сообщение
@@ -31,8 +31,8 @@ namespace test3_mail_web_api.Services
         public async Task SendAsync(List<string> recipients, string subject, string message)
         {
             var emailMessage = new MimeMessage();
-
-            emailMessage.From.Add(new MailboxAddress(MailConfig["fromname"], MailConfig["from"]));
+            
+            emailMessage.From.Add(new MailboxAddress(_options.Fromname, _options.From));
             foreach (string recipient in recipients)
             {
                 emailMessage.To.Add(new MailboxAddress("", recipient));
@@ -42,8 +42,8 @@ namespace test3_mail_web_api.Services
             
             using (var client = new SmtpClient())
             {
-                await client.ConnectAsync(MailConfig["smtp"], int.Parse(MailConfig["port"]),bool.Parse(MailConfig["use_ssl"]));
-                await client.AuthenticateAsync(MailConfig["login"], MailConfig["password"]);
+                await client.ConnectAsync(_options.Smtp, _options.Port,_options.Use_ssl);
+                await client.AuthenticateAsync(_options.Login, _options.Password);
                 await client.SendAsync(emailMessage);
                 await client.DisconnectAsync(true);
             }

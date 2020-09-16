@@ -52,34 +52,29 @@ namespace test3_mail_web_api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            
-            var maildto = new Mail
-            {
-                Subject = mail.Subject,
-                Body = mail.Body,
-                CreateDate = DateTime.UtcNow,
-                Result = "Ok",
-                FailedMessage = "",
-                Recipients = mail.Recipients
-            };
+
+
+            mail.CreateDate = DateTime.UtcNow.ToUniversalTime();
+            mail.Result = "Ok";
+            mail.FailedMessage = "";
 
             /// <value> Recipients должно содержать строку с адресами разделенными ',' </value>
             /// <example>1111@yandex.ru,2222@yandex.ru</example>
-            List<string> Recipients = maildto.Recipients.Split(',').ToList();
+            List<string> Recipients = mail.Recipients.Split(',').ToList();
 
                 try
                 {
-                    await Sender.SendAsync(Recipients, maildto.Subject, maildto.Body);
+                    await Sender.SendAsync(Recipients, mail.Subject, mail.Body);
                 }
                 catch (Exception ex)
                 {
-                    maildto.FailedMessage = ex.Message;
-                    maildto.Result = "Failed";
+                    mail.FailedMessage = ex.Message;
+                    mail.Result = "Failed";
                 }
 
-            db.Mails.Add(maildto);
+            db.Mails.Add(mail);
             await db.SaveChangesAsync();
-            return Ok(maildto);
+            return Ok(mail);
         }
 
 

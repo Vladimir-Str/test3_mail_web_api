@@ -35,14 +35,16 @@ namespace test3_mail_web_api.Migrations
 
                     b.Property<string>("Recipients")
                         .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("longtext CHARACTER SET utf8mb4")
+                        .HasMaxLength(2500);
 
                     b.Property<string>("Result")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Subject")
                         .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(50) CHARACTER SET utf8mb4")
+                        .HasMaxLength(50);
 
                     b.HasKey("MailID");
 

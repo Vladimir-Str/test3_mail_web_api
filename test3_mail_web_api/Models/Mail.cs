@@ -20,6 +20,7 @@ namespace test3_mail_web_api.Models
         public string Body{ get; set; }
 
         /// <value> Дата создания записи UTC </value>
+        [DisplayFormat(DataFormatString = "{0:f}", ApplyFormatInEditMode = true)]
         public DateTime CreateDate { get; set; }
 
         /// <value> Результат отправки Ok или Failed </value>

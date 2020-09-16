@@ -20,6 +20,7 @@ namespace test3_mail_web_api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<SMTPoptions>(Configuration.GetSection(SMTPoptions.SMTP));
             services.AddTransient<ISender, EmailSender>();
             services.AddDbContext<MailsContext>(options =>
             options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
