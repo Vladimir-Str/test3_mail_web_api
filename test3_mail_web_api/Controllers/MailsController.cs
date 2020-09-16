@@ -53,7 +53,7 @@ namespace test3_mail_web_api.Controllers
  
         // POST api/<controller>
         [HttpPost]
-        public async Task<ActionResult<Mail>> Post(Mail mail)
+        public async Task<ActionResult<Mail>> Post(Mail mail, ISender sender)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -72,20 +72,16 @@ namespace test3_mail_web_api.Controllers
             /// <example>1111@yandex.ru,2222@yandex.ru</example>
             List<string> Recipients = maildto.Recipients.Split(',').ToList();
 
-            EmailService emailService = new EmailService();
-
-            foreach (string recipient in Recipients)
-            { 
                 try
                 {
-                    await emailService.SendEmailAsync(recipient, maildto.Subject, maildto.Body);
+                    await sender.SendAsync(Recipients, maildto.Subject, maildto.Body);
                 }
                 catch (Exception ex)
                 {
                     maildto.FailedMessage = ex.Message;
                     maildto.Result = "Failed";
                 }
-            }
+
             db.Mails.Add(maildto);
             await db.SaveChangesAsync();
             return Ok(maildto);

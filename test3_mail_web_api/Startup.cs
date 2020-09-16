@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using test3_mail_web_api.Models;
-
+using test3_mail_web_api.Services;
 
 namespace test3_mail_web_api
 {
@@ -20,6 +20,7 @@ namespace test3_mail_web_api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ISender, EmailSender>();
             services.AddDbContext<MailsContext>(options =>
             options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
