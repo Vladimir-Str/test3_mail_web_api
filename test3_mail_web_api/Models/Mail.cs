@@ -30,6 +30,7 @@ namespace test3_mail_web_api.Models
         /// <value> Recipients должно содержать строку с адресами разделенными ',' </value>
         /// <example>1111@yandex.ru,2222@yandex.ru</example>
         [Required(ErrorMessage = "Укажите адресатов")]
+        [RegularExpression(@"^((\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*)\s*[,]{0,1}\s*)+$", ErrorMessage = "Строка содержит некорректные адреса")]
         public string Recipients { get; set; }
 
     }
