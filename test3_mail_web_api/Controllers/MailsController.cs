@@ -53,10 +53,10 @@ namespace test3_mail_web_api.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-
             mail.CreateDate = DateTime.UtcNow.ToUniversalTime();
             mail.Result = "Ok";
             mail.FailedMessage = "";
+            mail.Recipients = mail.Recipients.Replace(" ", "");
 
             /// <value> Recipients должно содержать строку с адресами разделенными ',' </value>
             /// <example>1111@yandex.ru,2222@yandex.ru</example>
