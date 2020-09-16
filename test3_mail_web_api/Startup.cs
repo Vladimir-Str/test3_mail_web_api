@@ -20,7 +20,7 @@ namespace test3_mail_web_api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ISender, EmailSender>();
+            services.AddTransient<ISender, EmailSender>();
             services.AddDbContext<MailsContext>(options =>
             options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();

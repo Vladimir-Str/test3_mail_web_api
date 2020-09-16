@@ -17,23 +17,18 @@ namespace test3_mail_web_api.Controllers
     /// MailsController обрабатывает два типа HTTP запросов GET,POST
     /// </summary>
     public class MailsController : Controller
-    {
-
-        MailsContext db;
-
+    {     
+       
         /// <summary>
         /// Конструктор контроллера получает контекст базы данных и заполняет ее первоначальными данными если база не содержит записей
         /// </summary>
-        public MailsController(MailsContext context)
+        public MailsController(MailsContext context,ISender sender)
         {
             db = context;
-            if (!db.Mails.Any())
-            {
-                db.Mails.Add(new Mail { Subject = "Тест", Body = "Тестовая запись", Recipients = "111@111.ru, 222@222.ru" , CreateDate = DateTime.UtcNow, Result="Ok"});
-                db.SaveChanges();
-            }
+            Sender = sender;
         }
-
+        MailsContext db;
+        ISender Sender;
         /// <summary>
         /// Метод get возвращает содержащиеся в бд записи
         /// </summary>
@@ -53,7 +48,7 @@ namespace test3_mail_web_api.Controllers
  
         // POST api/<controller>
         [HttpPost]
-        public async Task<ActionResult<Mail>> Post(Mail mail, ISender sender)
+        public async Task<ActionResult<Mail>> Post(Mail mail)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -74,7 +69,7 @@ namespace test3_mail_web_api.Controllers
 
                 try
                 {
-                    await sender.SendAsync(Recipients, maildto.Subject, maildto.Body);
+                    await Sender.SendAsync(Recipients, maildto.Subject, maildto.Body);
                 }
                 catch (Exception ex)
                 {
