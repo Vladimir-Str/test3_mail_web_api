@@ -90,6 +90,5 @@ C:\Users\Vladimir Stroganov\source\repos\test3_mail_web_api\test3_mail_web_api\o
 C:\Users\Vladimir Stroganov\source\repos\test3_mail_web_api\test3_mail_web_api\obj\Debug\netcoreapp3.1\test3_mail_web_api.dll
 C:\Users\Vladimir Stroganov\source\repos\test3_mail_web_api\test3_mail_web_api\obj\Debug\netcoreapp3.1\test3_mail_web_api.pdb
 C:\Users\Vladimir Stroganov\source\repos\test3_mail_web_api\test3_mail_web_api\obj\Debug\netcoreapp3.1\test3_mail_web_api.genruntimeconfig.cache
-C:\Users\Vladimir Stroganov\source\repos\test3_mail_web_api\test3_mail_web_api\bin\Debug\netcoreapp3.1\emailservice.json
 C:\Users\Vladimir Stroganov\source\repos\test3_mail_web_api\test3_mail_web_api\obj\Debug\netcoreapp3.1\test3_mail_web_api.csproj.CoreCompileInputs.cache
 C:\Users\Vladimir Stroganov\source\repos\test3_mail_web_api\test3_mail_web_api\obj\Debug\netcoreapp3.1\test3_mail_web_api.MvcApplicationPartsAssemblyInfo.cache
