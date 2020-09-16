@@ -12,6 +12,7 @@ namespace test3_mail_web_api.Models
 
         /// <value> Поле тема, направляемого письма </value>
         [Required(ErrorMessage = "Задайте тему письма")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Поле Subject должно быть от 3 до 50 символов")]
         public string Subject { get; set; }
 
         /// <value> Текст направляемого письма </value>
@@ -31,6 +32,7 @@ namespace test3_mail_web_api.Models
         /// <example>1111@yandex.ru,2222@yandex.ru</example>
         [Required(ErrorMessage = "Укажите адресатов")]
         [RegularExpression(@"^((\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*)\s*[,]{0,1}\s*)+$", ErrorMessage = "Строка содержит некорректные адреса")]
+        [StringLength(2500, ErrorMessage = "Recipients должно быть не более 2500 символов и не должно содержать более 100 адресатов(для Gmail)")]
         public string Recipients { get; set; }
 
     }

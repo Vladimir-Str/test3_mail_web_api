@@ -35,7 +35,6 @@ namespace test3_mail_web_api.Services
             emailMessage.From.Add(new MailboxAddress(MailConfig["fromname"], MailConfig["from"]));
             foreach (string recipient in recipients)
             {
-                //добавить проверку валидности
                 emailMessage.To.Add(new MailboxAddress("", recipient));
             }
             emailMessage.Subject = subject;
